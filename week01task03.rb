@@ -7,26 +7,14 @@ b = gets.chomp.to_i
 print "Введите третью сторону: "
 c = gets.chomp.to_i
 
-if a == b || a == c || b == c
+if a == b && a == c
   puts "Треугольник равнобедренный!"
 end
 
-if (a >= b) && (a>=c)
-  x = a
-  y = b
-  z = c
-elsif (b>=a) && (b>=c)
-  x = b
-  y = a
-  z = c
-elsif (c>=a) && (c>=b)
-  x = c
-  y = a
-  z = b
-end
+side = [a,b,c].sort!
 
-if x*x == y*y + z*z
-  puts "Треугольник прямоугольный: #{x*x} == #{y*y} + #{z*z}"
+if  side[2]**2 == side[1]**2 + side[0]**2
+  puts "Треугольник прямоугольный!"
 else
-  puts "Треугольник не прямоугольный:  #{x*x} != #{y*y} + #{z*z}"
+  puts "Треугольник не прямоугольный!"
 end
