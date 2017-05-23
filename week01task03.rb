@@ -1,14 +1,17 @@
 print "Введите первую сторону: "
-a = gets.chomp.to_i
+a = gets.chomp.to_f
 
 print "Введите вторую сторону: "
-b = gets.chomp.to_i
+b = gets.chomp.to_f
 
 print "Введите третью сторону: "
-c = gets.chomp.to_i
+c = gets.chomp.to_f
 
-if a == b && a == c
-  puts "Треугольник равнобедренный!"
+if a == b || a == c || b == c
+  print "Треугольник равнобедренный "
+  if a == c && a == b
+    puts "и равносторонний!"
+  end
 end
 
 side = [a,b,c].sort!
