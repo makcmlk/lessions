@@ -1,5 +1,3 @@
-
-
 class Train
   attr_accessor :number
   attr_accessor :type
@@ -10,9 +8,50 @@ class Train
     @speed = 0
   end
 
-  def route(route)
-    @route = route
-    "route of #{train.number} is changed"
+  def route(new_route)
+    puts "route of #{train.number} is changed"
+    @route = new_route
+    @station_number = 0
+  end
+
+  def current_station
+    @route.station(@station_number) unless @route.empty?
+  end
+
+  def next_station
+    if !@route.empty?
+      return puts 'On the last station!' unless @station_number == @route.size
+      @route.station(@station_number + 1).name
+    else
+      puts 'no route!'
+    end
+  end
+
+  def prev_station
+    if !@route.empty?
+      return puts 'On the first station!' unless @station_number.nonzero?
+      @route.station(@station_number - 1).name
+    else
+      puts 'no route!'
+    end
+  end
+
+  def move_next
+    if !@route.empty?
+      return puts 'you are in the end!' unless @station_number != @route.size
+      @station_number += 1
+    else
+      puts 'no route!'
+    end
+  end
+
+  def move_prev
+    if !@route.empty?
+      return puts 'On the first station!' unless @station_number.nonzero?
+      @station_number -= 1
+    else
+      puts 'no route!'
+    end
   end
 
   def speed
@@ -38,32 +77,47 @@ class Train
     end
   end
 
+  def delete_car
+    if @speed.zero? && @count_of_cars >= 1
+      @count_of_cars -= 1
+      puts "car is added. count of cars: #{@count_of_cars}"
+    else
+      puts 'can not add a car'
+    end
+  end
 end
 
 class Station
   attr_accessor :name
   def initialize(name)
     @name = name
-    @list_of_trains = {}
+    @list_of_trains = []
   end
 
   def get_train(train)
-    @list_of_trains[train.number] = train.type
+    @list_of_trains.insert(train)
   end
 
-  def list_of_trains()
-    puts "List of trains type type #{type}"
-    @list_of_trains.each { |train, type| puts "train  No#{train}, type #{type}" }
+  def list_of_trains
+    puts 'List of trains type type'
+    @list_of_trains.each { |train| puts "train  No #{train.number}, type #{train.type}" }
   end
 
-  def get_list_of_trains_by_type(type)
-    puts "List of trains type type #{type}"
-    @list_of_trains.invert.values_at(type).each { |x| puts "train number #{x}" }
+  def get_list_of_trains(type)
+    puts "List of trains type #{type}"
+    @list_of_trains.each do |train|
+      puts "train  No #{train.number}, type #{train.type}" if train.type == type
+    end
   end
 
   def send_train(train)
-    puts "train #{train.number} is on the route"
-    @list_of_trains.delete(train.number)
+    if !train.next_station.empty?
+      puts "train #{train.number} is going to #{train.next_station}"
+      train.move_next
+      @list_of_trains.delete(train)
+    else
+      puts 'no route'
+    end
   end
 end
 
@@ -82,12 +136,15 @@ class Route
   end
 
   def delete_station(station)
-    puts "#{station.name} is deleted from route"
     @stations.delete_if { |x| x == station }
   end
 
   def list
     puts 'Stations in this route:'
     @stations.each { |station| puts station.name }
+  end
+
+  def station(number)
+    @stations[number]
   end
 end
