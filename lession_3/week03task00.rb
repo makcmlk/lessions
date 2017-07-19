@@ -9,26 +9,26 @@ class Train
   end
 
   def route(new_route)
-    puts "route of #{train.number} is changed"
+    puts "route of #{@number} is changed"
     @route = new_route
     @station_number = 0
   end
 
   def current_station
-    @route.station(@station_number) unless @route.empty?
+    return @route.station(@station_number).name unless @route.nil?
   end
 
   def next_station
-    if !@route.empty?
-      return puts 'On the last station!' unless @station_number == @route.size
+    if !@route.nil?
+      return 'On the last station!' unless @station_number + 1 == @route.size
       @route.station(@station_number + 1).name
     else
-      puts 'no route!'
+      'no route!'
     end
   end
 
   def prev_station
-    if !@route.empty?
+    if !@route.nil?
       return puts 'On the first station!' unless @station_number.nonzero?
       @route.station(@station_number - 1).name
     else
@@ -37,7 +37,7 @@ class Train
   end
 
   def move_next
-    if !@route.empty?
+    if !@route.nil?
       return puts 'you are in the end!' unless @station_number != @route.size
       @station_number += 1
     else
@@ -66,6 +66,10 @@ class Train
   def stop
     puts 'Train is stoped'
     @speed = 0
+  end
+
+  def count_of_cars
+    @count_of_cars
   end
 
   def add_car
@@ -147,4 +151,55 @@ class Route
   def station(number)
     @stations[number]
   end
+
+  def size
+    @stations.size
+  end
 end
+
+train1 = Train.new(001, 'PASS', 10)
+train2 = Train.new(002, 'PASS', 9)
+train3 = Train.new(003, 'PASS', 11)
+train4 = Train.new(004, 'TOV', 8)
+train5 = Train.new(005, 'TOV', 13)
+
+station1 = Station.new('New York')
+station2 = Station.new('Chicago')
+station3 = Station.new('Washington')
+station4 = Station.new('Detroit')
+station5 = Station.new('Los Angeles')
+station6 = Station.new('Miami')
+
+route1 = Route.new(station1, station6)
+route2 = Route.new(station2, station5)
+route3 = Route.new(station3, station4)
+route4 = Route.new(station2, station6)
+route5 = Route.new(station3, station6)
+
+route1.add_station(station2, 1)
+route1.add_station(station3, 2)
+route1.add_station(station4, 3)
+route1.add_station(station5, 4)
+
+route1.list
+puts route1.station(1)
+route1.delete_station(1)
+route1.list
+
+train1.route(route1)
+puts train1.current_station
+puts train1.next_station
+train1.move_next
+puts train1.current_station
+train1.move_next
+train1.move_next
+puts train1.current_station
+puts train1.next_station
+puts train1.prev_station
+train1.speed
+train1.up_speed
+train1.add_car
+puts train1.count_of_cars
+train1.stop
+train1.add_car
+puts train1.count_of_cars
