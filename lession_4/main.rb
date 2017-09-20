@@ -86,21 +86,3 @@ class Railway
     @stations.each { |station| puts "Station #{station.name}, #{station.list_of_trains.size} trains"}
   end
 end
-
-rzd = Railway.new
-rzd.new_station('Moscow')
-rzd.new_station('Rostov')
-rzd.new_station('Saint_P')
-rzd.new_station('Kazan')
-rzd.new_c_train(1111)
-rzd.new_p_train(2222)
-rzd.new_route(@stations.at(0), @stations.at(0))
-rzd.add_in_route(@routes.first, @stations[1], 1)
-rzd.add_in_route(@routes.first, @stations[2], 2)
-rzd.delete_from_route(@routes.first, @stations[2])
-rzd.set_route(@trains.first, @routes.first)
-rzd.set_route(@trains.last, @routes.first)
-rzd.go_next(@trains.first)
-rzd.list_of_trains(@stations.first)
-rzd.list_of_trains(@stations[1])
-rzd.list_of_stations
