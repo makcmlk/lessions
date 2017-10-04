@@ -16,15 +16,14 @@ class Route
     @stations.delete_if { |x| x == station }
   end
 
-private
-# не используем этот метод
   def list
-    puts 'Stations in this route:'
-    @stations.each { |station| puts station.name }
+    list = ''
+    @stations.each_with_index { |station, index| list+="[#{index}] #{station.name}, " }
+    list
   end
 
   def station(number)
-    @stations[number]
+    return @stations[number] unless @stations[number].nil?
   end
 
   def size

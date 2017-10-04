@@ -8,24 +8,33 @@ class Train
   end
 
   def route(new_route)
-    puts "route of #{@number} is changed"
     @route = new_route
     @station_number = 0
   end
 
   def move_next
     if !@route.nil?
-      return puts 'you are in the end!' unless @station_number != @route.size
-      @station_number += 1
+      if @station_number == @route.size - 1
+        puts ' in the end!'
+      else
+        puts " going to #{next_station}"
+        @station_number += 1
+        next_station
+      end
     else
       puts 'no route!'
     end
   end
 
   def move_prev
-    if !@route.empty?
-      return puts 'On the first station!' unless @station_number.nonzero?
-      @station_number -= 1
+    if !@route.nil?
+      if @station_number < 1
+        puts 'on the first station!'
+      else
+        puts " going to #{prev_station}"
+        @station_number -= 1
+        prev_station
+      end
     else
       puts 'no route!'
     end
@@ -36,42 +45,48 @@ class Train
   end
 
   def delete_car
-    @cars.last.delete
+    unless @cars.empty?
+      @cars.last.delete
+      puts "Car is deleted from #{this.number}"
+    end
+  end
+
+  def current_station
+    return @route.station(@station_number).name unless @route.nil?
+  end
+
+  def next_station
+    if !@route.nil?
+      if @station_number == @route.size - 1
+        print ' on last station!'
+      else
+        @route.station(@station_number + 1)
+      end
+    else
+      ' no route!'
+    end
+  end
+
+  def prev_station
+    if !@route.nil?
+      if @station_number < 1
+        puts 'On the last station!'
+      else
+        @route.station(@station_number - 1)
+      end
+    else
+      'no route!'
+    end
   end
 
   protected
 
   # вызывается из классов-наследников
   def add_car(new_car)
-    @cars.insert(new_car)
+    @cars.push(new_car)
   end
 
-  private
-
-# не используем этот метод
-  def current_station
-    return @route.station(@station_number).name unless @route.nil?
-  end
-
-  # не используем этот метод
-  def next_station
-    if !@route.nil?
-      return 'On the last station!' unless @station_number + 1 == @route.size
-      @route.station(@station_number + 1).name
-    else
-      'no route!'
-    end
-  end
-
-  # не используем этот метод
-  def prev_station
-    if !@route.nil?
-      return puts 'On the first station!' unless @station_number.nonzero?
-      @route.station(@station_number - 1).name
-    else
-      puts 'no route!'
-    end
-  end
+private
 
   # не используем этот метод
   def speed

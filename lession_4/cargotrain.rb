@@ -3,6 +3,7 @@ require './cargocar.rb'
 
 class CargoTrain < Train
   def add_car(new_car)
-    super if new_car.class == CargoCar
+    super(new_car) if new_car.class.name == 'CargoCar'
+    puts "AZAZAZ #{@cars.size}"
   end
 end
