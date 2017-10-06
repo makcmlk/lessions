@@ -94,7 +94,7 @@ class Railway
   end
 
   def go_next(train_number)
-    if train_number <= @trains.size
+    if train_number <= @trains.size && !@trains[train_number].current_station.nil?
       @trains[train_number].current_station.send_train(@trains[train_number])
       next_station = @trains[train_number].move_next
       next_station.get_train(@trains[train_number])
@@ -102,14 +102,10 @@ class Railway
   end
 
   def go_prev(train_number)
-    if train_number <= @trains.size
-      if @trains[train_number].prev_station.is_a?(Station)
-        @trains[train_number].current_station.send_train(@trains[train_number])
-        previous_station = @trains[train_number].move_prev
-        previous_station.get_train(@trains[train_number])
-      else
-        @trains[train_number].prev_station
-      end
+    if (train_number <= @trains.size) && !@trains[train_number].current_station.nil?
+      @trains[train_number].current_station.send_train(@trains[train_number])
+      previous_station = @trains[train_number].move_prev
+      previous_station.get_train(@trains[train_number])
     end
   end
 

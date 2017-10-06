@@ -191,16 +191,19 @@ def move_train(railroad)
   railroad.list_of_all_trains.each { |train| puts "train  No #{train.number}, size: #{train.count_of_cars}"}
   puts 'Enter a number of train to move:'
   number_of_train = gets.chomp.to_i
-  puts "Train number #{number_of_train}, on station #{railroad.current_station(number_of_train).name}"
-  puts 'Select action: 0 - next station, 1 - previous station, 2 - cancel'
-  action = gets.chomp.to_i
-  case action
-  when 0
-    railroad.go_next(number_of_train)
-  when 1
-    railroad.go_prev(number_of_train)
-  when 2
-    puts 'Canceled'
+  if !railroad.current_station(number_of_train).nil?
+    puts "Train number #{number_of_train}, on station #{railroad.current_station(number_of_train).name}"
+    puts 'Select action: 0 - next station, 1 - previous station, 2 - cancel'
+    action = gets.chomp.to_i
+    case action
+    when 0
+      railroad.go_next(number_of_train)
+    when 1
+      railroad.go_prev(number_of_train)
+    when 2
+      puts 'Canceled'
+    end
   end
 end
+
 end

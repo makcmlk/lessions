@@ -52,11 +52,19 @@ class Train
   end
 
   def next_station
-    @route.station(@station_number + 1)
+    if !@route.nil? && @station_number < @route.size - 1
+      @route.station(@station_number + 1)
+    else
+      return nil
+    end
   end
 
   def prev_station
-    @route.station(@station_number - 1)
+    if !@route.nil? && @station_number > 0
+      @route.station(@station_number - 1)
+    else
+      return nil
+    end
   end
 
   def add_car(new_car)
