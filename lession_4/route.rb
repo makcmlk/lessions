@@ -6,7 +6,6 @@ class Route
   def add_station(station, order)
     if order <= @stations.size
       @stations.insert(order, station)
-      puts "#{station.name} is in the route"
     else
       puts 'Station is not in the route'
     end

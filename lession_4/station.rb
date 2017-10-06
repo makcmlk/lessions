@@ -6,8 +6,15 @@ class Station
   end
 
   def get_train(train)
-    @trains.push(train)
-    puts "Train No #{@trains.last.number} is on the station #{@name}"
+    if train.is_a?(Train)
+      @trains.push(train)
+    end
+  end
+
+  def send_train(train)
+    if train.is_a?(Train)
+      @trains.delete(train)
+    end
   end
 
   def list_of_trains

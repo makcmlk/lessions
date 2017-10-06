@@ -14,12 +14,10 @@ class Train
 
   def move_next
     if !@route.nil?
-      if @station_number == @route.size - 1
-        puts ' in the end!'
-      else
-        puts " going to #{next_station}"
+      if @station_number < @route.size
         @station_number += 1
-        next_station
+        puts "Going to #{@route.station(@station_number).name}"
+        @route.station(@station_number)
       end
     else
       puts 'no route!'
@@ -28,12 +26,10 @@ class Train
 
   def move_prev
     if !@route.nil?
-      if @station_number < 1
-        puts 'on the first station!'
-      else
-        puts " going to #{prev_station}"
+      if @station_number >= 1
         @station_number -= 1
-        prev_station
+        puts "Going to #{@route.station(@station_number).name}"
+        @route.station(@station_number)
       end
     else
       puts 'no route!'
@@ -46,44 +42,33 @@ class Train
 
   def delete_car
     unless @cars.empty?
-      @cars.last.delete
-      puts "Car is deleted from #{this.number}"
+      puts "Car is deleted from train No #{@number}"
+      @cars.delete(@cars.last)
     end
   end
 
   def current_station
-    return @route.station(@station_number).name unless @route.nil?
+    return @route.station(@station_number) unless @route.nil?
   end
 
   def next_station
-    if !@route.nil?
-      if @station_number == @route.size - 1
-        print ' on last station!'
-      else
-        @route.station(@station_number + 1)
-      end
-    else
-      ' no route!'
-    end
+    @route.station(@station_number + 1)
   end
 
   def prev_station
-    if !@route.nil?
-      if @station_number < 1
-        puts 'On the last station!'
-      else
-        @route.station(@station_number - 1)
-      end
-    else
-      'no route!'
+    @route.station(@station_number - 1)
+  end
+
+  def add_car(new_car)
+    if valid_car?(new_car)
+      @cars.push(new_car)
     end
   end
 
   protected
 
   # вызывается из классов-наследников
-  def add_car(new_car)
-    @cars.push(new_car)
+  def valid_car?(new_car)
   end
 
 private

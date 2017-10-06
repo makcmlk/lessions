@@ -1,49 +1,51 @@
-require './station.rb'
-require './route.rb'
-require './cargotrain.rb'
-require './passengertrain.rb'
-require './passengercar.rb'
-require './cargocar.rb'
+require_relative './station'
+require_relative './route'
+require_relative './cargo_train'
+require_relative './passenger_train'
+require_relative './passenger_car'
+require_relative './cargo_car'
 
 class Railway
   def initialize
     @stations = []
     @trains = []
     @routes = []
-    puts 'New railway is created! /n'
+    puts 'Welcome to The Railway!'
   end
 
   def new_station(name)
     @stations.push(Station.new(name))
-    puts "Station #{name} is created. (total: #{@stations.size})"
   end
 
   def new_c_train
     @trains.push(CargoTrain.new(@trains.size))
-    puts "Cargo train #{@trains.last.number} is created"
+    @trains.last.number
   end
 
   def new_p_train
     @trains.push(PassengerTrain.new(@trains.size))
-    puts "Passenger train #{@trains.last.number} is created"
+    @trains.last.number
   end
 
   def set_route(train_number, route_number)
-    @trains[train_number].route(@routes[route_number])
-    puts "Route #{@routes[route_number].list} is set to train No #{@trains[train_number].number}"
-    @routes[route_number].station(0).get_train(@trains[train_number])
+    if train_number < @trains.size && route_number < @routes.size
+      @trains[train_number].route(@routes[route_number])
+      @routes[route_number].station(0).get_train(@trains[train_number])
+      @routes[route_number].list + ' is set'
+    else
+      ' is not set, one of arguments is wrong'
+    end
   end
 
   def new_route(from, to)
     if from < @stations.size + 1 && to < @stations.size + 1
       @routes.push(Route.new(@stations[from], @stations[to]))
-      puts "New route #{@stations[from].name} to #{@stations[to].name} is created"
+      @routes.last.list
     end
   end
 
   def routes
-    puts '--- List of existing routes -----'
-    @routes.each_with_index { |route, index| puts "#{index}:  #{route.list}" }
+    @routes
   end
 
   def route(number)
@@ -53,18 +55,18 @@ class Railway
   def add_in_route(route_number, station_number, order)
     if !@stations[station_number].nil? && !@routes[route_number].nil?
       @routes[route_number].add_station(@stations[station_number], order)
-      puts "Station #{@stations[station_number].name} is in route #{@routes[route_number].list}"
+      @routes[route_number].list
     else
-      puts 'Error!'
+      'Error!'
     end
   end
 
   def delete_from_route(route_number, station_number)
-    if !@stations[station_number].nil? && !@routes[route_number].nil?
-      @route[route_number].delete_station(@stations[station_number])
-      puts "Now #{@stations[station_number]} is not in route #{@routes[route_number].list}"
+    if station_number < @routes[route_number].size && route_number < @routes.size
+      @routes[route_number].delete_station(@stations[station_number])
+      @routes[route_number].list
     else
-      puts 'Error!'
+      'Error!'
     end
   end
 
@@ -73,13 +75,13 @@ class Railway
   end
 
   def add_car_to(train_number)
-    if @trains[train_number].class == PassengerTrain
+    if @trains[train_number].is_a?(PassengerTrain)
       @trains[train_number].add_car(PassengerCar.new)
-      puts "New Passenger Car is added into train No #{@trains[train_number].number}"
+      @trains[train_number].number
     end
-    if @trains[train_number].class == CargoTrain
+    if @trains[train_number].is_a?(CargoTrain)
       @trains[train_number].add_car(CargoCar.new)
-      puts "New Cargo Car is added into train No #{@trains[train_number].number}"
+      @trains[train_number].number
     end
   end
 
@@ -93,30 +95,35 @@ class Railway
 
   def go_next(train_number)
     if train_number <= @trains.size
-      puts "Train No. #{@trains[train_number].number} is"
-      @trains[train_number].move_next.get_train(@trains[train_number])
+      @trains[train_number].current_station.send_train(@trains[train_number])
+      next_station = @trains[train_number].move_next
+      next_station.get_train(@trains[train_number])
     end
   end
 
   def go_prev(train_number)
     if train_number <= @trains.size
-      puts "Train No. #{@trains[train_number].number} is"
-      @trains[train_number].move_prev.get_train(@trains[train_number])
+      if @trains[train_number].prev_station.is_a?(Station)
+        @trains[train_number].current_station.send_train(@trains[train_number])
+        previous_station = @trains[train_number].move_prev
+        previous_station.get_train(@trains[train_number])
+      else
+        @trains[train_number].prev_station
+      end
     end
   end
 
   def list_of_trains(number_of_station)
-    puts "List of trains on station #{@stations[number_of_station].name}"
-    puts @stations[number_of_station].list_of_trains.each { |train| puts "train  No #{train.number}, size: #{train.count_of_cars}"}
+    if number_of_station <= @stations.size - 1
+      @stations[number_of_station].list_of_trains
+    end
   end
 
   def list_of_all_trains
-    puts '--- List of trains ---------------'
-    @trains.each { |train| puts "train  No #{train.number}, size: #{train.count_of_cars}"}
+    @trains
   end
 
   def list_of_stations
-    number = 0
-    @stations.each_with_index { |station, index| puts "#{index} - Station #{station.name}, #{station.list_of_trains.size} trains"}
+    @stations
   end
 end
