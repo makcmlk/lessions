@@ -11,7 +11,7 @@ module InstanceCounter
       @count_of_instances
     end
 
-    def init_instanses
+    def init_instances
       @count_of_instances ||= 0
       @count_of_instances += 1
     end
@@ -21,7 +21,7 @@ module InstanceCounter
     private
 
     def register_instance
-      self.class.send :init_instanses
+      self.class.send :init_instances
     end
   end
 end
