@@ -2,9 +2,9 @@ require_relative 'manufacturer'
 require_relative 'instance_counter'
 
 class Train
-  extend InstanceCounter::ClassMethods
+
   include Manufacturer
-  include InstanceCounter::InstancesMethods
+  include InstanceCounter
   attr_accessor :number
   @trains = []
 
