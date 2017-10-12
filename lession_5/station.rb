@@ -7,16 +7,12 @@ class Station
     def all
       @stations
     end
-
-    def new(station)
-      @stations.push(station)
-    end
   end
 
   def initialize(name)
     @name = name
     @trains = []
-    Station.new(self)
+    @stations.push(station)
   end
 
   def get_train(train)

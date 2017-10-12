@@ -5,8 +5,6 @@ module InstanceCounter
   end
 
   module ClassMethods
-    attr_accessor :count_of_instances
-
     def instances
       @count_of_instances
     end
@@ -21,7 +19,7 @@ module InstanceCounter
     private
 
     def register_instance
-      self.class.send :init_instances
+      self.class.init_instances
     end
   end
 end

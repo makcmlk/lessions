@@ -2,24 +2,14 @@ require_relative 'manufacturer'
 require_relative 'instance_counter'
 
 class Train
-
   include Manufacturer
   include InstanceCounter
   attr_accessor :number
-  @trains = []
+  @@trains = {}
 
   class << self
-    def new_train(train)
-      @trains.push(train)
-    end
-
     def find(number)
-      result = @trains.select { |train| train.number == number }
-      if !result.empty?
-        return result
-      else
-        return nil
-      end
+      @@trains[number]
     end
   end
 
@@ -28,7 +18,7 @@ class Train
     @cars = []
     @count_of_cars = count_of_cars
     @speed = 0
-    Train.new_train(self)
+    @@trains[number] = self
     register_instance
   end
 
