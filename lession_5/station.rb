@@ -1,7 +1,7 @@
 class Station
   attr_accessor :name
 
-  @stations = []
+  @@stations = []
 
   class << self
     def all
@@ -12,7 +12,7 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
-    @stations.push(station)
+    @@stations.push(station)
   end
 
   def get_train(train)
