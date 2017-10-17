@@ -6,7 +6,8 @@ class Train
   include InstanceCounter
   attr_accessor :number
 
-  NUMBER_FORMAT = /[A-Z]{3}(\-|)[\d]{3}/
+  # три буквы или цифры в любом порядке, необязательный дефис и еще 2 буквы или цифры после дефиса.
+  NUMBER_FORMAT = /[\w]{3}(\-)?[\w]{2}/
 
   @@trains = {}
 
@@ -31,7 +32,6 @@ class Train
   rescue
     false
   end
-
 
   def route(new_route)
     @route = new_route
@@ -106,9 +106,8 @@ class Train
 
   def validate!
     raise 'Number of train cant be empty' if number.nil?
-    raise 'Number of train should be at least 7 symbols' if number.length < 7
-    raise "Number #{number} has invalid format (SSS-NNN)" if number !~ NUMBER_FORMAT
-    true
+    raise 'Number of train should be at least 5 symbols' if number.length < 5
+    raise "Number #{number} has invalid format (SSS[-]SS)" if number !~ NUMBER_FORMAT
   end
 
   private

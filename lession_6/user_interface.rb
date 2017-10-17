@@ -89,8 +89,8 @@ def add_station(railroad)
   railroad.new_station(station_name)
   puts "Station #{station_name} is created."
   railroad.list_of_stations
-rescue RuntimeError => e
-  puts "Error! Wrong name of station #{e.message}"
+rescue => e
+  puts "Error! #{e.message}"
   retry
 end
 
@@ -103,21 +103,21 @@ def add_train(railroad)
   case input
   when 0
     begin
-      puts 'Enter ID of train in format SSS-NNN (S - symbol, N - number)'
+      puts 'Enter ID of train in format SSS-SS'
       name = gets.chomp
       number_of_new_train = railroad.new_p_train(name)
       puts "New train No #{number_of_new_train} is created"
-    rescue RuntimeError => e
+    rescue => e
       puts "Error! Wrong ID of train: #{e.message}"
       retry
     end
   when 1
     begin
-      puts 'Enter ID of train in format SSS-NNN (S - symbol, N - number)'
+      puts 'Enter ID of train in format SSS-SS'
       name = gets.chomp
       number = railroad.new_c_train(name)
       puts "New train No #{number} is created"
-    rescue RuntimeError => e
+    rescue => e
       puts "Error! Wrong number of train: #{e.message}"
       retry
     end
@@ -149,7 +149,7 @@ def new_route(railroad)
     end_number = gets.chomp.to_i
     list_of_new_route = railroad.new_route(start_number, end_number)
     puts "New route: #{list_of_new_route} is created"
-  rescue RuntimeError => e
+  rescue => e
     puts "Something is wrong with route: #{e.message} Try again? 0 - yes 1 - no"
     answer = gets.chomp.to_i
     retry if answer.zero?

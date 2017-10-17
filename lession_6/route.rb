@@ -39,9 +39,8 @@ class Route
   protected
 
   def validate!
-    raise 'No or invalid start station' if @stations[0].nil? || @stations[0].class != Station
-    raise 'No or invalid finish station' if @stations[1].nil? || @stations[1].class != Station
-    true
+    raise 'No or invalid start station' if @stations[0].is_a?(Station)
+    raise 'No or invalid finish station' if @stations[1].is_a?(Station)
   end
 
 end

@@ -37,7 +37,6 @@ class Station
   def validate!
     raise "Name of station can't be empty" if name.nil?
     raise 'Name of station should be at least 3 symbols' if name.length < 3
-    true
   end
 
   private
