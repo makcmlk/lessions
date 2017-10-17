@@ -11,9 +11,9 @@ class Station
 
   def initialize(name)
     @name = name
+    validate!
     @trains = []
     @@stations.push(self)
-    validate!
   end
 
   def get_train(train)

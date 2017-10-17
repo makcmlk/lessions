@@ -22,6 +22,7 @@ class Train
     register_instance
   end
 
+
   def route(new_route)
     @route = new_route
     @station_number = 0
@@ -88,13 +89,13 @@ class Train
     end
   end
 
-  protected
+  protectedы
 
   # вызывается из классов-наследников
   def valid_car?(new_car)
   end
 
-private
+  private
 
   # не используем этот метод
   def speed

@@ -108,7 +108,7 @@ def add_train(railroad)
       number_of_new_train = railroad.new_p_train(name)
       puts "New train No #{number_of_new_train} is created"
     rescue RuntimeError => e
-      puts "Error! Wrong number of train: #{e.message}"
+      puts "Error! Wrong ID of train: #{e.message}"
       retry
     end
   when 1
@@ -142,12 +142,19 @@ end
 
 def new_route(railroad)
   railroad.list_of_stations.each_with_index { |station, index| puts "#{index} - Station #{station.name}, #{station.list_of_trains.size} trains"}
-  puts 'Enter a number of the start station:'
-  start_number = gets.chomp.to_i
-  puts 'Enter a number of the finish station:'
-  end_number = gets.chomp.to_i
-  list_of_new_route = railroad.new_route(start_number, end_number)
-  puts "New route: #{list_of_new_route} is created"
+  begin
+    puts 'Enter a number of the start station:'
+    start_number = gets.chomp.to_i
+    puts 'Enter a number of the finish station:'
+    end_number = gets.chomp.to_i
+    list_of_new_route = railroad.new_route(start_number, end_number)
+    puts "New route: #{list_of_new_route} is created"
+  rescue RuntimeError => e
+    puts "Something is wrong with route: #{e.message} Try again? 0 - yes 1 - no"
+    answer = gets.chomp.to_i
+    retry if answer.zero?
+    puts 'Canceled...'
+  end
 end
 
 def route_to_train(railroad)

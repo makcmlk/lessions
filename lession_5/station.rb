@@ -10,9 +10,15 @@ class Station
   end
 
   def initialize(name)
-    @name = name
+    @name = names
     @trains = []
     @@stations.push(station)
+  end
+
+  def valid?
+    validate!
+  rescue
+    false
   end
 
   def get_train(train)
@@ -31,12 +37,21 @@ class Station
     @trains
   end
 
-private
-# не используем этот метод
+  protected
+
+  def validate!
+    raise "Name of station can't be empty" if name.nil?
+    raise 'Name of station should be at least 3 symbols' if name.length < 3
+    true
+  end
+
+  private
+
   def list_of_trains_by(type)
-    puts "List of trains type #{type}"
+    trains_of_type = []
     @trains.each do |train|
-      puts "train  No #{train.number}, type #{train.type}" if train.type == type
+      trains_of_type.push(train) if train.type == type
     end
+    trains_of_type
   end
 end
