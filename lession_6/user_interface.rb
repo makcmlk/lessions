@@ -89,6 +89,9 @@ def add_station(railroad)
   railroad.new_station(station_name)
   puts "Station #{station_name} is created."
   railroad.list_of_stations
+rescue RuntimeError => e
+  puts "Error! Wrong name of station #{e.message}"
+  retry
 end
 
 def add_train(railroad)

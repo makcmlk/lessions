@@ -105,9 +105,9 @@ class Train
   end
 
   def validate!
-    raise 'ID of train cant be empty' if number.nil?
-    raise 'ID of train should be at least 6 symbols' if number.length < 7
-    raise "ID #{number} has invalid format (SSS-NNN)" if number !~ NUMBER_FORMAT
+    raise 'Number of train cant be empty' if number.nil?
+    raise 'Number of train should be at least 6 symbols' if number.length < 7
+    raise "Number #{number} has invalid format (SSS-NNN)" if number !~ NUMBER_FORMAT
     true
   end
 
