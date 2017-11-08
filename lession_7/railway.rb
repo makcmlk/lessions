@@ -78,12 +78,8 @@ class Railway
     @trains[train_number].count_of_cars
   end
 
-  def cars_of(train_number)
-    if @trains[train_number].is_a? (CargoTrain)
-      @trains[train_number].car_block { |car, index| puts "#{index} - #{car.class}, seats/occupied #{car.volume}/#{car.occupied}"}
-    else
-      @trains[train_number].car_block { |car, index| puts "#{index} - #{car.class}, volume/occupied #{car.volume}/#{car.occupied}"}
-    end
+  def cars_of(train_number, block)
+    @trains[train_number].car_block(block)
   end
 
   def add_car_to(train_number, volume)
@@ -121,9 +117,9 @@ class Railway
     end
   end
 
-  def list_of_trains(number_of_station)
+  def list_of_trains(number_of_station, block)
     if number_of_station <= @stations.size - 1
-      @stations[number_of_station].trains_block { |train| puts "#{train.number} - #{train.class}, cars: #{train.count_of_cars}."}
+      @stations[number_of_station].trains_block(block)
     end
   end
 

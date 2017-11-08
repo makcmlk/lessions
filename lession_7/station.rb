@@ -16,8 +16,8 @@ class Station
     @@stations.push(self)
   end
 
-  def trains_block
-    @trains.each { |train| yield(train) }
+  def trains_block(block)
+    @trains.each { |train| block.call(train) }
   end
 
   def get_train(train)

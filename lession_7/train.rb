@@ -27,8 +27,8 @@ class Train
     register_instance
   end
 
-  def car_block
-    @cars.each_with_index { |car, index| yield(car, index) }
+  def car_block(block)
+    @cars.each_with_index { |car, index| block.call(car, index) }
   end
 
   def valid?

@@ -1,7 +1,7 @@
 require_relative 'carriage'
 
 class CargoCar < Carriage
-  def take_a_volume
-    @occupied += 100 if @occupied + 100 <= @volume
+  def take_a_volume(size)
+    @occupied += size if @occupied + size <= @volume
   end
 end

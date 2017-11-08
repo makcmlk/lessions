@@ -104,14 +104,16 @@ def list_of_cars(railroad)
   list_of_trains(railroad)
   puts 'Enter a number of train to add a carriage'
   number_of_train = gets.chomp.to_i
-  railroad.cars_of(number_of_train)
+  block = lambda { |car, index| puts "#{index} - #{car.class}, free/occupied #{car.volume}/#{car.occupied}"}
+  railroad.cars_of(number_of_train, block)
 end
 
 def trains_on_station(railroad)
   railroad.list_of_stations.each_with_index { |station, index| puts "#{index} - Station #{station.name}, #{station.list_of_trains.size} trains"}
   puts 'Enter number of station: '
   number_of_station = gets.chomp.to_i
-  railroad.list_of_trains(number_of_station)
+  block = lambda { |train| puts "#{train.number} - #{train.class}, cars: #{train.count_of_cars}."}
+  railroad.list_of_trains(number_of_station, block)
 end
 
 def add_station(railroad)
