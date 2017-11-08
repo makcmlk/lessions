@@ -44,6 +44,9 @@ def self.run(railway)
       when 11
         puts '------- Cars List of train  -------'
         ui.list_of_cars(railway)
+      when 777
+        puts '------- Creating test data  -------'
+        ui.create_data(railway)
         end
       end
     end
@@ -55,7 +58,7 @@ def show_menu
   puts '1 - List of trains'
   puts '2 - List of trains by station'
   puts '3 - Move train'
-  puts '4 - Add an station'
+  puts '4 - Add a station'
   puts '5 - Add a train'
   puts '6 - Add a route'
   puts '7 - Set a route to train'
@@ -63,6 +66,29 @@ def show_menu
   puts '9 - Add a carriage to train'
   puts '10 - Unhook the carriage'
   puts '11 - Carriage of train'
+  puts '777 - Fast start (create an test data)'
+end
+
+def create_data(railroad)
+  railroad.new_station('MOSCOW')
+  railroad.new_station('ST.PETERSBURG')
+  railroad.new_station('KAZAN')
+  railroad.new_station('ROSTOV-NA-DONU')
+  railroad.new_p_train('PAS-11')
+  railroad.new_c_train('CAR-11')
+  railroad.new_route(0, 3)
+  railroad.add_in_route(0, 1, 1)
+  railroad.add_in_route(0, 2, 1)
+  railroad.set_route(0, 0)
+  railroad.set_route(1, 0)
+  railroad.add_car_to(0, 40)
+  railroad.add_car_to(0, 40)
+  railroad.add_car_to(0, 40)
+  railroad.add_car_to(0, 80)
+  railroad.add_car_to(1, 1000)
+  railroad.add_car_to(1, 1000)
+  railroad.add_car_to(1, 1000)
+  railroad.add_car_to(1, 1000)
 end
 
 def list_of_stations(railroad)
