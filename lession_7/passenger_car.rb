@@ -1,7 +1,7 @@
 require_relative 'carriage'
 
 class PassengerCar < Carriage
-  def occupy(size = 1)
-    super(size)
+  def occupy(size)
+    super(1)
   end
 end

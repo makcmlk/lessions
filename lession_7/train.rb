@@ -102,7 +102,7 @@ class Train
     end
   end
 
-  def occupy_place(volume = nil)
+  def occupy_place(volume)
     @cars.each { |car| break if car.occupy(volume) } unless @cars.empty?
   end
 
