@@ -27,8 +27,8 @@ class Train
     register_instance
   end
 
-  def car_block(block)
-    @cars.each_with_index { |car, index| block.call(car, index) }
+  def each_car()
+    @cars.each_with_index { |car, index| yield(car, index) }
   end
 
   def valid?
@@ -99,6 +99,27 @@ class Train
       @cars.push(new_car)
     else
       nil
+    end
+  end
+
+  # из интерфейса объём передаётся только для грузового поезда
+  def occupy_place(volume)
+    if !@cars.empty? && is_a?(CargoTrain)
+      @cars.each do |car|
+        if car.free_space >= volume
+          car.take_a_volume(volume)
+          puts car.occupied
+          return true
+        end
+      end
+    elsif !@cars.empty? && is_a?(PassengerTrain)
+      @cars.each do |car|
+        if car.free_space.nonzero?
+          car.take_a_seat
+          puts car.occupied
+          return true
+        end
+      end
     end
   end
 

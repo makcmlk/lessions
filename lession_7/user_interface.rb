@@ -44,6 +44,9 @@ def self.run(railway)
       when 11
         puts '------- Cars List of train  -------'
         ui.list_of_cars(railway)
+      when 12
+        puts '--- Take a seat / occupy volume ---'
+        ui.occupy(railway)
       when 777
         puts '------- Creating test data  -------'
         ui.create_data(railway)
@@ -66,7 +69,22 @@ def show_menu
   puts '9 - Add a carriage to train'
   puts '10 - Unhook the carriage'
   puts '11 - Carriage of train'
+  puts '12 - To take a seat/occupy volume'
   puts '777 - Fast start (create an test data)'
+end
+
+def occupy(railroad)
+  list_of_trains(railroad)
+  puts 'Enter a number of train to occupy'
+  number_of_train = gets.chomp.to_i
+  volume = 0
+  if railroad.size_of(number_of_train) > 0
+    if railroad.type_of_train(number_of_train) == CargoTrain
+      puts 'Enter a volume to occupy'
+      volume = gets.chomp.to_f
+    end
+    railroad.occupy_place(number_of_train, volume)
+  end
 end
 
 def create_data(railroad)
@@ -165,10 +183,11 @@ def add_carriage(railroad)
   number_of_train = gets.chomp.to_i
   if railroad.type_of_train(number_of_train) == PassengerTrain
     puts 'Enter a count of seats for new carriage'
+    volume_of_carriage = gets.chomp.to_i
   else
     puts 'Enter a volume for new carriage'
+    volume_of_carriage = gets.chomp.to_f
   end
-  volume_of_carriage = gets.chomp.to_i
   railroad.add_car_to(number_of_train, volume_of_carriage)
 end
 

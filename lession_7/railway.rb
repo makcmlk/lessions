@@ -79,7 +79,11 @@ class Railway
   end
 
   def cars_of(train_number, block)
-    @trains[train_number].car_block(block)
+    @trains[train_number].each_car(&block)
+  end
+
+  def occupy_place(train_number, volume)
+    @trains[train_number].occupy_place(volume)
   end
 
   def add_car_to(train_number, volume)
@@ -119,7 +123,7 @@ class Railway
 
   def list_of_trains(number_of_station, block)
     if number_of_station <= @stations.size - 1
-      @stations[number_of_station].trains_block(block)
+      @stations[number_of_station].each_train(&block)
     end
   end
 
