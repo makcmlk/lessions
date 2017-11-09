@@ -102,25 +102,8 @@ class Train
     end
   end
 
-  # из интерфейса объём передаётся только для грузового поезда
-  def occupy_place(volume)
-    if !@cars.empty? && is_a?(CargoTrain)
-      @cars.each do |car|
-        if car.free_space >= volume
-          car.take_a_volume(volume)
-          puts car.occupied
-          return true
-        end
-      end
-    elsif !@cars.empty? && is_a?(PassengerTrain)
-      @cars.each do |car|
-        if car.free_space.nonzero?
-          car.take_a_seat
-          puts car.occupied
-          return true
-        end
-      end
-    end
+  def occupy_place(volume = nil)
+    @cars.each { |car| break if car.occupy(volume) } unless @cars.empty?
   end
 
   protected

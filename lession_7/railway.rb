@@ -82,7 +82,7 @@ class Railway
     @trains[train_number].each_car(&block)
   end
 
-  def occupy_place(train_number, volume)
+  def occupy_place(train_number, volume = nil)
     @trains[train_number].occupy_place(volume)
   end
 

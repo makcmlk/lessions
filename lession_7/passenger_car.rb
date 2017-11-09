@@ -1,7 +1,7 @@
 require_relative 'carriage'
 
 class PassengerCar < Carriage
-  def take_a_seat
-    @occupied += 1 if @occupied < @volume
+  def occupy(size = 1)
+    super(size)
   end
 end

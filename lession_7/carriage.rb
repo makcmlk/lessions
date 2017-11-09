@@ -12,4 +12,11 @@ class Carriage
   def free_space
     @volume - @occupied
   end
+
+  def occupy(size)
+    if @occupied + size <= @volume
+      @occupied += size
+      true
+    end
+  end
 end
