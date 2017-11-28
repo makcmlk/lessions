@@ -1,15 +1,20 @@
 require_relative 'manufacturer'
 require_relative 'instance_counter'
 require_relative './accessor'
+require_relative './validation'
 
 class Train
   include Manufacturer
   include InstanceCounter
+  include Validation
   extend Accessor
   attr_accessor :number
   attr_accessor_with_history :station_number
 
   NUMBER_FORMAT = /[\w]{3}(\-)?[\w]{2}/
+
+  validate :number, :presence
+  validate :number, :format, NUMBER_FORMAT
 
   @@trains = {}
 
@@ -91,11 +96,12 @@ class Train
   def valid_car?(new_car)
   end
 
-  def validate!
-    raise 'Number of train cant be empty' if number.nil?
-    raise 'Number of train should be at least 5 symbols' if number.length < 5
-    raise "Number #{number} has invalid format" if number !~ NUMBER_FORMAT
-  end
+
+  #def validate!
+  #  raise 'Number of train cant be empty' if number.nil?
+  #  raise 'Number of train should be at least 5 symbols' if number. < 5
+#    raise "Number #{number} has invalid format" if number !~ NUMBER_FORMAT
+#   end
 
   private
 

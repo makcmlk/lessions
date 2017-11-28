@@ -1,5 +1,13 @@
+require_relative './validation'
+
 class Station
+  include Validation
+
+  FORMAT_NAME = /^[a-z]$/i
+
   attr_accessor :name
+  validate :name, :presence
+  validate :name, :format, FORMAT_NAME
 
   @@stations = []
 
@@ -32,10 +40,10 @@ class Station
 
   protected
 
-  def validate!
-    raise "Name of station can't be empty" if name.nil?
-    raise 'Name of station should be at least 3 symbols' if name.length < 3
-  end
+#  def validate!
+#    raise "Name of station can't be empty" if name.nil?
+#    raise 'Name of station should be at least 3 symbols' if name.length < 3
+#  end
 
   private
 
